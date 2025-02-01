@@ -271,7 +271,7 @@ header {
 .page-front {
   transform: rotateY(0deg);
   background: linear-gradient(to right, hsl(127deg 8.73% 92.86%), #f6f7f6);
-  color: rgb(19 79 176 / 97%);
+  color:  rgba(245, 15, 15, 0.97);
 }
 
 .responsive-video {
