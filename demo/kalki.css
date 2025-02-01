@@ -1,0 +1,624 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  font-family: 'Poppins';
+  box-sizing: border-box;
+}
+
+body{
+  background: #fefefe;
+}
+
+header {
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(to right, #00093c, #2d0b00);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 100px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  width: 300px;
+}
+
+.hamburger {
+  display: none;
+}
+
+.nav-bar ul {
+  display: flex;
+}
+
+.nav-bar ul li {
+  position: relative;
+}
+
+.nav-bar ul li a {
+  text-align: center;
+  display: block;
+  color: #e15509;
+  font-size: 17px;
+  padding: 12px 25px;
+  transition: 0.2s;
+  margin: 0 5px;
+}
+
+.nav-bar ul li a:hover {
+  color: #f0f0f3;
+  background: #de5906;
+}
+
+.nav-bar ul li a.active {
+  color: #11101b;
+  background: #eaefeb;
+}
+
+/* Dropdown Menu Styles */
+.nav-bar ul li .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: linear-gradient(to right, #00093c, #2d0b00);
+  display: none;
+  flex-direction: column;
+  padding: 10px 0;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.nav-bar ul li .dropdown-menu li a {
+  width: 190px;
+  padding: 10px 20px;
+  font-size: 17px;
+  color: #fefefe;
+  transition: background 0.2s;
+}
+
+.nav-bar ul li .dropdown-menu li a:hover {
+  border-radius: 20px;
+  background:#de5207;
+  color: #f2f2f5;
+}
+
+/* Show Dropdown on Hover */
+.nav-bar ul li:hover .dropdown-menu {
+  display: flex;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  header {
+    padding: 0 20px;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .hamburger .line {
+    width: 25px;
+    height: 3px;
+    background: #fff;
+  }
+
+  .nav-bar {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: #e23b03;
+  }
+
+  .nav-bar.active {
+    display: flex;
+  }
+
+  .nav-bar ul {
+    flex-direction: column;
+  }
+
+  .nav-bar ul li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-bar ul li a {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .nav-bar ul li .dropdown-menu {
+    position: static;
+    background: #c73502;
+    box-shadow: none;
+  }
+
+  .nav-bar ul li .dropdown-menu li a {
+    padding: 10px;
+  }
+}
+
+
+@media only screen and (max-width:1100px) {
+  header {
+    padding: 0 30px;
+  }
+}
+
+/* For screens below 900px */
+@media only screen and (max-width: 900px) {
+  .hamburger {
+    display: block;
+    cursor: pointer;
+  }
+
+  .hamburger .line {
+    width: 30px;
+    height: 3px;
+    background: #fefefe;
+    margin: 6px 0;
+  }
+
+  .nav-bar {
+    height: 0;
+    position: fixed;
+    top: 58px; /* Aligns below the header */
+    left: 0;
+    right: 0;
+    width: 100vw;
+    background: #11101b;
+    transition: height 0.5s ease;
+    overflow: hidden;
+    z-index: 101; /* Make sure it's above other elements */
+  }
+
+  .nav-bar ul {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: none;
+  }
+
+  .nav-bar.active {
+    height: 250px; /* Adjust height for your menu */
+  }
+
+  .nav-bar.active ul {
+    opacity: 1;
+    display: block;
+  }
+}
+
+
+/*Book animation */
+/* Set the background of the entire book area */
+.flipping-book {
+  background: #bdc3c7;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #2c3e50, #bdc3c7);
+  perspective: 1500px;
+  margin: 5px auto;
+  width: 80%;
+  max-width: 800px;
+  height: 690px;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adjust shadow for better visibility */
+  padding: 25px;
+}
+
+.book-pages {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.page {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transform-origin: left;
+  transform: rotateY(0deg);
+  transition: transform 0.8s ease-in-out;
+  z-index: 0; /* Ensure correct stacking order initially */
+}
+
+.page:nth-child(odd) {
+  z-index: 2; /* Higher z-index for odd pages */
+}
+
+.page:nth-child(even) {
+  z-index: 1; /* Lower z-index for even pages */
+}
+
+.page-front,
+.page-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Ensures only one side is visible at a time */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  
+  border: 2px solid #393636; /* Adjust border for visibility */
+  border-radius: 4px;
+}
+
+.page-front img {
+  max-width: 100%;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+  
+.page-front {
+  transform: rotateY(0deg);
+  background: linear-gradient(to right, hsl(127deg 8.73% 92.86%), #f6f7f6);
+  color: rgba(237, 9, 9, 0.97);
+}
+
+.responsive-video {
+  width: 100%; /* Adjusts video to the width of the container */
+  height: auto; /* Maintains the aspect ratio */
+  border: 2px solid #ddd; /* Optional: adds a border around the video */
+  border-radius: 8px; /* Optional: adds rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: adds a shadow effect */
+}
+
+.responsive-video2 {
+  align-items: center;
+  width: 45%;
+  max-width: 45%; /* Optional: Set a maximum width */
+  height: 55%;
+  margin-top: 2px;
+  border-radius: 8px; /* Optional: Add rounded corners */
+}
+
+.responsive-video3 {
+  align-items: center;
+  width: 70%;
+  max-width: 70%; /* Optional: Set a maximum width */
+  height: 65%;
+  margin-top: 2px;
+  border-radius: 8px; /* Optional: Add rounded corners */
+}
+.responsive-video4 {
+  align-items: center;
+  width: 35%;
+  max-width: 40%; /* Optional: Set a maximum width */
+  height: 50%;
+  margin-top: 2px;
+  border-radius: 8px; /* Optional: Add rounded corners */
+}
+
+.responsive-video5 {
+  align-items: center;
+  width: 35%;
+  max-width: 40%; /* Optional: Set a maximum width */
+  height: 45%;
+  margin-top: 2px;
+  border-radius: 8px; /* Optional: Add rounded corners */
+}
+
+.page-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(to right, #00093c, #f0aa06);
+  color: black;
+}
+
+.page h2 {
+  color: linear-gradient(to right, #00093c, #2d0b00);
+  font-size: 42px;
+  margin-bottom: 6px;
+}
+
+strong {
+  color: rgb(123, 21, 21);
+  }
+
+.page p {
+  color: #000;
+  font-size: 16px;
+  text-align: center;
+   margin-right: 10px;
+  margin-left: 15px; 
+}
+
+body {
+  margin: 0;
+  background: #C02425;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #C02425, #F0CB35);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #C02425, #F0CB35);
+  font-family: Arial, sans-serif;
+}
+
+@media (max-width: 900px) {
+  .flipping-book {
+    width: 90%;
+    height: 800px;
+  }
+
+  .page-front img {
+    max-width: 100%;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .page h2 {
+    color: linear-gradient(to right, #00093c, #2d0b00);
+    font-size: 35px;
+    margin-bottom: 10px;
+  }
+  
+
+  .page p {
+    margin-left: 7px;
+    margin-right: 7px;
+    font-size: 18px;
+  }
+
+  
+}
+
+@media (max-width: 700px) {
+  .flipping-book {
+    width: 95%;
+    height: 680px;
+  }
+
+  .page-front img {
+    max-width: 100%;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .page h2 {
+    color: linear-gradient(to right, #00093c, #2d0b00);
+    font-size: 30px;
+    margin-bottom: 2px;
+  }
+  
+
+  .page p {
+    margin-left: 7px;
+    margin-right: 7px;
+    font-size: 15px;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .flipping-book {
+    width: 85%;
+    height: 680px;
+  }
+
+  .page-front img {
+    max-width: 100%;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .page h2 {
+    color: linear-gradient(to right, #00093c, #2d0b00);
+    font-size: 30px;
+    margin-bottom: 2px;
+  }
+  
+
+  .page p {
+    margin-left: 7px;
+    margin-right: 7px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 767px){
+  .flipping-book{
+    width: 95%;
+    height: 580px;
+  }
+
+  .page-front img {
+    max-width: 100%;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .page p {
+    font-size: 10.5px;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+
+  .page h2 {
+    color: linear-gradient(to right, #00093c, #2d0b00);
+    font-size: 16px;
+    
+  }
+  
+}
+    
+
+/* Footer Section  */
+footer{
+    width: 100%;
+    background: linear-gradient(to right, #00093c, #2d0b00);
+    color: #fff;
+    padding: 100px 0 30px;
+  
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .row{
+    width: 85%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .col{
+    flex-basis: 25%;
+    padding: 10px;
+  }
+
+  .col:nth-child(2), .col:nth-child(3){
+    flex-basis: 15%;
+  }
+
+  .newlogo{
+    width: 300px;
+    margin-bottom: 10px;
+  }
+
+  .col p{
+    font-size: 15px;
+  }
+
+  .col h3{
+    color: #fb7b04;
+    width: fit-content;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .email-id{
+    width: fit-content;
+    border-bottom: 1px solid #ccc;
+    margin: 20px 0;
+  }
+
+  .col ul li{
+    list-style: none;
+    margin-bottom: 12px;
+  }
+
+  .col ul li a{
+    text-decoration: none;
+    color: #fff;
+  }
+
+  form{
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 50px;
+  }
+
+  form .fa-regular{
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
+  form input {
+    width: 100%;
+    background: transparent;
+    color: #ccc;
+    border: 0;
+    outline: none;
+  }
+
+  form button{
+    background: transparent;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+  }
+
+  form button .fa-solid{
+    font-size: 16px;
+    color: #ccc;
+  }
+
+  .social-icons .fa-brands{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    color: #000;
+    background: #fff;
+    margin-right: 15px;
+    cursor: pointer;
+  }
+
+  hr{
+    width: 90%;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    margin: 20px auto;
+  }
+
+  .copyright{
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .underline{
+    width: 100%;
+    height: 5px;
+    background: #767676;
+    border-radius: 3px;
+    top: 25px;
+    left: 0;
+    overflow: hidden;
+  }
+
+  .underline span{
+    width: 15px;
+    height: 100%;
+    background: #fff;
+    border-radius: 3px;
+    top: 0;
+    left: 10px;
+    animation: moving 2s linear infinite;
+  }
+
+  @keyframes moving{
+    0%{
+      left: -20px;
+    }
+    100%{
+      left: 100%;
+    }
+  }
+
+  @media (max-width: 700px){
+    footer{
+      bottom: unset;
+      padding: 10px 0 30px;
+    }
+    .col{
+      flex-basis: 100%;
+    }
+    .col:nth-child(2), .col:nth-child(3){
+      flex-basis: 100%;
+    }
+  }
+  
